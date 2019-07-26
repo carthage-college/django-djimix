@@ -29,7 +29,8 @@ SELECT
     prog_enr_rec.acst,
     stu_acad_rec.sess,
     prog_enr_rec.cl,
-    mobile_rec.phone as mobile
+    mobile_rec.phone as mobile,
+    cc_student_medical_manager.sports
 FROM
     id_rec
 INNER JOIN
@@ -45,10 +46,24 @@ LEFT JOIN
 LEFT JOIN
     stu_serv_rec    ON  id_rec.id   =   stu_serv_rec.id
 LEFT JOIN
+    cc_student_medical_manager ON id_rec.id = cc_student_medical_manager.college_id
+LEFT JOIN
     aa_rec as mobile_rec on
     (id_rec.id = mobile_rec.id AND mobile_rec.aa = "ENS")
 WHERE
     id_rec.id = {cid}
+AND
+    cc_student_medical_manager.created_at > MDY(
+        6, 1,
+        CASE
+          WHEN
+            month(CURRENT) < 6
+          THEN
+            YEAR(TODAY- 1 UNITS YEAR)
+          ELSE
+            YEAR(TODAY)
+        END
+    )
 AND
     stu_serv_rec.yr = year(CURRENT)
 AND
