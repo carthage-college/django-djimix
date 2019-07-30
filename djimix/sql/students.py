@@ -69,13 +69,13 @@ AND
 AND
   stu_serv_rec.sess =
   CASE
-    WHEN month(CURRENT) > 7 THEN "RA"
+    WHEN month(CURRENT) > 6 THEN "RA"
     ELSE "RC"
   END
 and
   stu_acad_rec.SESS =
   CASE
-    WHEN month(CURRENT) > 7 THEN "RA"
+    WHEN month(CURRENT) > 6 THEN "RA"
     ELSE "RC"
   END
 '''.format
