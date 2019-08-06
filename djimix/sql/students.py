@@ -24,6 +24,7 @@ SELECT
     profile_rec.birth_date,
     profile_rec.sex,
     mobile_rec.phone as mobile,
+    prog_enr_rec.adv_id,
     prog_enr_rec.subprog,
     prog_enr_rec.lv_date,
     prog_enr_rec.acst,
