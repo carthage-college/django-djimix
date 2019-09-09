@@ -196,9 +196,6 @@ EMAIL_FAIL_SILENTLY = False
 DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
 SERVER_MAIL=''
-# app settings
-CSS_GROUP='CenterForStudentSuccess'
-CSS_EMAIL=''
 REQUIRED_ATTRIBUTE = True
 # logging
 LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
