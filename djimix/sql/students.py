@@ -23,7 +23,7 @@ SELECT
     id_rec.zip, id_rec.ctry, id_rec.phone, cvid_rec.ldap_name,
     adm_rec.plan_enr_sess,adm_rec.plan_enr_yr,
     profile_rec.birth_date, profile_rec.sex, mobile_rec.phone as mobile,
-    stu_acad_rec.sess, prog_enr_rec.acst, prog_enr_rec.cl,
+    stu_acad_rec.sess, prog_enr_rec.cl,
     prog_enr_rec.adv_id, prog_enr_rec.subprog, prog_enr_rec.lv_date,
         TRIM(
             CASE
