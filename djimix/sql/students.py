@@ -104,5 +104,5 @@ and
     WHEN month(CURRENT) > 6 THEN "RA"
     ELSE "RC"
   END
-ORDER BY stu_serv_rec.yr desc
+ORDER BY stu_serv_rec.yr DESC
 '''.format
