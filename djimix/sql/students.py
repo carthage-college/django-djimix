@@ -106,3 +106,14 @@ and
   END
 ORDER BY stu_serv_rec.yr DESC
 '''.format
+
+ADMISSIONS_REP = '''
+SELECT
+    id_rec.id, id_rec.lastname, id_rec.firstname
+FROM
+    adm_rec
+INNER JOIN
+    id_rec ON adm_rec.cnslr_id = id_rec.id
+WHERE
+    adm_rec.primary_app = 'Y' AND adm_rec.id = {cid}
+'''.format
