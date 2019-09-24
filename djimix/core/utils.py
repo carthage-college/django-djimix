@@ -53,3 +53,38 @@ def get_connection(earl=None):
         cnxn.setencoding(unicode, encoding='utf-8')
 
     return cnxn
+
+
+def xsql(sql, key=None, earl=None):
+    """
+    helper method that executes the SQL queries against Informix using
+    ODBC
+    """
+
+    if not earl:
+        earl = settings.INFORMIX_ODBC
+
+    connection = get_connection(earl)
+
+    cursor = connection.cursor()
+
+    if key == "debug":
+        objects = cursor.execute(sql)
+    else:
+        # while loop is need because informix barfs from
+        # time to time. 10 is the current threshhold.
+        count = 0
+        while True:
+            try:
+                objects = cursor.execute(sql)
+                break
+            except:
+                count += 1
+                if count < 10:
+                    pass
+                else:
+                    objects = None
+                    break
+
+    return objects
+
