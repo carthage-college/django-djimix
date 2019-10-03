@@ -76,7 +76,7 @@ LEFT JOIN
     (id_rec.id = mobile_rec.id AND mobile_rec.aa = "ENS")
 WHERE
     id_rec.id = {cid}
-ORDER BY stu_serv_rec.add_date DESC
+ORDER BY stu_serv_rec.stusv_no DESC
 '''.format
 
 ADMISSIONS_REP = '''
