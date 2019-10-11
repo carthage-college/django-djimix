@@ -10,7 +10,21 @@ def get_connection(earl=None, encoding=True):
     if not earl:
         earl = settings.INFORMIX_ODBC
 
-    cnxn = pyodbc.connect(earl)
+    count = 0
+    # sometimes we cannot connect to the database, so we attempt
+    # a number of times before failing. currently 100 attempts.
+    while True:
+        try:
+            cnxn = pyodbc.connect(earl)
+            break
+        except:
+            count += 1
+            if count < 100:
+                pass
+            else:
+                cnxn = None
+                break
+
     if encoding:
         try:
             # Python 3.x
