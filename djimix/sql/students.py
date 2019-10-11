@@ -46,7 +46,7 @@ SELECT
                 ELSE ""
             END
         ) AS major3,
-    mobile_rec.phone as mobile, cc_student_medical_manager.sports
+    mobile_rec.phone as mobile
 FROM
     id_rec
 INNER JOIN
@@ -70,15 +70,32 @@ LEFT JOIN
 LEFT JOIN
     stu_serv_rec    ON  id_rec.id   =   stu_serv_rec.id
 LEFT JOIN
-    cc_student_medical_manager ON id_rec.id = cc_student_medical_manager.college_id
-LEFT JOIN
     aa_rec as mobile_rec on
     (id_rec.id = mobile_rec.id AND mobile_rec.aa = "ENS")
 WHERE
     id_rec.id = {cid}
 ORDER BY stu_serv_rec.stusv_no DESC
 '''.format
-
+SPORTS = '''
+SELECT
+    sports
+FROM
+    cc_student_medical_manager
+WHERE
+    college_id = {cid}
+AND
+    created_at > MDY(
+        6, 1,
+        CASE
+          WHEN
+            month(CURRENT) < 6
+          THEN
+            YEAR(TODAY- 1 UNITS YEAR)
+          ELSE
+            YEAR(TODAY)
+        END
+    )
+'''.format
 ADMISSIONS_REP = '''
 SELECT
     id_rec.id, id_rec.lastname, id_rec.firstname
