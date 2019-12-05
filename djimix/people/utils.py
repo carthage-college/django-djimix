@@ -29,10 +29,8 @@ def get_position(tpos):
     results = cache.get(key)
     if not results:
         sql = POSITION(tpos=tpos)
-        results = xsql(sql)
-        if results:
-            results = results.fetchone()
-        else:
+        results = xsql(sql).fetchone()
+        if not results:
             results = settings.TPOS_DEFAULT[tpos]
         cache.set(key, results, None)
     return results
