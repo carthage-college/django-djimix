@@ -10,6 +10,19 @@ import os
 MSSQL_EARL = ''
 # informix connection string
 INFORMIX_ODBC = ''
+
+# informix environment for shell scripts that run under cron
+INFORMIXSERVER = 'wilson'
+DBSERVERNAME = 'wilson'
+INFORMIXDIR = '/opt/ibm/informix'
+ODBCINI = '/etc/odbc.ini'
+ONCONFIG = 'onconf.cars'
+INFORMIXSQLHOSTS = '/opt/ibm/informix/etc/sqlhosts'
+LD_LIBRARY_PATH = '{}/lib:{}/lib/esql:{}/lib/tools:/usr/lib/apache2/modules:{}/lib/cli'.format(
+    INFORMIXDIR,INFORMIXDIR,INFORMIXDIR,INFORMIXDIR
+)
+LD_RUN_PATH = '/opt/ibm/informix/lib:/opt/ibm/informix/lib/esql:/opt/ibm/informix/lib/tools:/usr/lib/apache2/modules'
+
 # Debug
 DEBUG = False
 INFORMIX_DEBUG = 'debug'
@@ -62,7 +75,6 @@ DATABASES = {
     },
 }
 INSTALLED_APPS = [
-    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,11 +85,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djimix.core',
     'djimix.dashboard',
-    # needed for template tags
-    'djtools',
-    # third party apps
-    'loginas',
-    'taggit'
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
