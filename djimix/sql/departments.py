@@ -31,7 +31,8 @@ ORDER BY
 # NOTE: not as accurrate as FACULTY_DEPTS, i think.
 ACADEMIC_DEPARTMENTS = """
     SELECT
-        dept_table.dept as dept_code, dept_table.txt as dept_name,
+        TRIM(dept_table.dept) AS dept_code,
+        dept_table.txt as dept_name,
         dept_table.div as div_code, div_table.txt as div_name
     FROM
         dept_table
