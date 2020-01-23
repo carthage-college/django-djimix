@@ -56,13 +56,13 @@ def xsql(sql, connection=None, key=None):
 
     cursor = connection.cursor()
 
+    rows = None
     if key == 'debug':
         rows = cursor.execute(sql)
     else:
         # while loop is needed because informix barfs from
         # time to time. 10 is the current threshhold.
         count = 0
-        rows = None
         while count < 10:
             try:
                 rows = cursor.execute(sql)
