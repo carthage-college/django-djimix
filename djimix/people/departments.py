@@ -13,23 +13,17 @@ from collections import OrderedDict
 def department(code):
     """Returns the department given the three letter code."""
     sql = "{0} AND hrdept = '{1}' ORDER BY DESCR".format(ALL_DEPARTMENTS, code)
-    connection = get_connection()
-    # automatically closes the connection after leaving 'with' block
-    with connection:
-        rows = xsql(sql, connection)
-        try:
-            return rows.fetchone()
-        except AttributeError:
-            return None
+    rows = xsql(sql)
+    try:
+        return rows.fetchone()
+    except AttributeError:
+        return None
 
 
 def departments_all_choices():
     """Returns department tuples for choices parameter in models and forms."""
-    connection = get_connection()
-    # automatically closes the connection after leaving 'with' block
-    with connection:
-        faculty = xsql(FACULTY_DEPTS, connection)
-        staff = xsql(STAFF_DEPTS, connection)
+    faculty = xsql(FACULTY_DEPTS)
+    staff = xsql(STAFF_DEPTS)
     depts = [('', '---Staff Departments---')]
 
     if staff:
@@ -48,24 +42,20 @@ def departments_all_choices():
 def academic_department(did):
     """Returns academic departments based on department ID."""
     sql = "{0} AND dept_table.dept = '{1}'".format(ACADEMIC_DEPARTMENTS, did)
-    connection = get_connection()
-    with connection:
-        rows = xsql(sql, connection)
-        try:
-            return rows.fetchone()
-        except AttributeError:
-            return None
+    rows = xsql(sql)
+    try:
+        return rows.fetchone()
+    except AttributeError:
+        return None
 
 
 def person_departments(cid):
     """Returns all departments to which a person belongs."""
-    connection = get_connection()
-    with connection:
-        rows = xsql(PERSON_DEPARTMENTS(college_id=cid), connection)
-        try:
-            return rows.fetchall()
-        except AttributeError:
-            return None
+    rows = xsql(PERSON_DEPARTMENTS(college_id=cid))
+    try:
+        return rows.fetchall()
+    except AttributeError:
+        return None
 
 
 def chair_departments(cid):
@@ -95,26 +85,24 @@ def chair_departments(cid):
             dept_table.txt
     """.format(base, cid)
 
-    connection = get_connection()
-    with connection:
-        rows = xsql(sql, connection).fetchall()
+    rows = xsql(sql).fetchall()
 
-        if rows:
-            # division dean
-            dc = 'dean'
-        else:
-            # department chair
-            dc = 'chair'
-            sql = """
-                {0}
-                AND
-                    dept_table.head_id={1}
-                AND
-                    dept_table.dept != ("_ESN")
-                ORDER BY
-                dept_table.txt
-            """.format(base, cid)
-            rows = xsql(sql, connection).fetchall()
+    if rows:
+        # division dean
+        dc = 'dean'
+    else:
+        # department chair
+        dc = 'chair'
+        sql = """
+            {0}
+            AND
+                dept_table.head_id={1}
+            AND
+                dept_table.dept != ("_ESN")
+            ORDER BY
+            dept_table.txt
+        """.format(base, cid)
+        rows = xsql(sql).fetchall()
     if rows:
         for row in rows:
             depts[(row.dept_code)] = {
@@ -130,21 +118,17 @@ def chair_departments(cid):
 
 def department_division_chairs(where):
     """Return the department chair and division dean profiles."""
-    connection = get_connection()
-    with connection:
-        rows = xsql(DEPARTMENT_DIVISION_CHAIRS(where=where), connection)
-        try:
-            return rows.fetchall()
-        except AttributeError:
-            return None
+    rows = xsql(DEPARTMENT_DIVISION_CHAIRS(where=where))
+    try:
+        return rows.fetchall()
+    except AttributeError:
+        return None
 
 
 def department_faculty(code, year):
     """Return the faculty for the department given the dept code & year."""
-    connection = get_connection()
-    with connection:
-        rows = xsql(DEPARTMENT_FACULTY(year=year, dept=code), connection)
-        try:
-            return rows.fetchall()
-        except AttributeError:
-            return None
+    rows = xsql(DEPARTMENT_FACULTY(year=year, dept=code))
+    try:
+        return rows.fetchall()
+    except AttributeError:
+        return None
