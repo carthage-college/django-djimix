@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
+
+"""Database utilities for pyodbc."""
+
 from django.conf import settings
 
 import pyodbc
 
 
 def get_connection(earl=None, encoding=True):
-    """
-    establish an ODBC connection to a database
-    """
+    """Establish an ODBC connection to a database."""
     if not earl:
         earl = settings.INFORMIX_ODBC
 
@@ -17,7 +19,7 @@ def get_connection(earl=None, encoding=True):
         try:
             cnxn = pyodbc.connect(earl)
             break
-        except:
+        except pyodbc.Error:
             count += 1
             if count < 100:
                 pass
@@ -28,12 +30,15 @@ def get_connection(earl=None, encoding=True):
     if encoding:
         try:
             # Python 3.x
-            # production
             cnxn.setencoding(encoding='utf-8')
             cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='cp1252')
             cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='cp1252')
-            cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-32le', ctype=pyodbc.SQL_CHAR)
-        except:
+            cnxn.setdecoding(
+                pyodbc.SQL_WMETADATA,
+                encoding='utf-32le',
+                ctype=pyodbc.SQL_CHAR,
+            )
+        except pyodbc.NotSupportedError:
             # Python 2.7
             cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='cp1252')
             cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='cp1252')
@@ -44,31 +49,25 @@ def get_connection(earl=None, encoding=True):
 
 
 def xsql(sql, connection=None, key=None):
-    """
-    helper method that executes the SQL queries against Informix using
-    ODBC
-    """
+    """Executes the SQL queries against Informix using ODBC."""
 
     if not connection:
         connection = get_connection()
 
     cursor = connection.cursor()
-    if key == "debug":
-        objects = cursor.execute(sql)
+
+    if key == 'debug':
+        rows = cursor.execute(sql)
     else:
-        # while loop is need because informix barfs from
+        # while loop is needed because informix barfs from
         # time to time. 10 is the current threshhold.
         count = 0
-        while True:
+        rows = None
+        while count < 10:
             try:
-                objects = cursor.execute(sql)
+                rows = cursor.execute(sql)
                 break
-            except:
+            except pyodbc.Error:
                 count += 1
-                if count < 10:
-                    pass
-                else:
-                    objects = None
-                    break
 
-    return objects
+    return rows
