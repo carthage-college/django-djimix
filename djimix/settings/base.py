@@ -6,10 +6,14 @@ Django settings for project.
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-# sqlserver connection string
+# sqlserver connection strings
 MSSQL_EARL = ''
+LENEL_EARL = ''
 # informix connection string
 INFORMIX_ODBC = ''
+INFORMIX_ODBC_TRAIN = ''
+INFORMIX_ODBC_JXLIVE = ''
+INFORMIX_ODBC_JXTEST = ''
 
 # informix environment for shell scripts that run under cron
 INFORMIXSERVER = 'wilson'
