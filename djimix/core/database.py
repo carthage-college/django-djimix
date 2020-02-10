@@ -27,7 +27,7 @@ def get_connection(earl=None, encoding=True):
                 cnxn = None
                 break
 
-    if encoding:
+    if cnxn and encoding:
         try:
             # Python 3.x
             cnxn.setencoding(encoding='utf-8')
@@ -50,24 +50,22 @@ def get_connection(earl=None, encoding=True):
 
 def xsql(sql, connection=None, key=None):
     """Executes the SQL queries against Informix using ODBC."""
-
     if not connection:
         connection = get_connection()
 
-    cursor = connection.cursor()
-
     rows = None
-    if key == 'debug':
-        rows = cursor.execute(sql)
-    else:
-        # while loop is needed because informix barfs from
-        # time to time. 10 is the current threshhold.
-        count = 0
-        while count < 10:
-            try:
-                rows = cursor.execute(sql)
-                break
-            except pyodbc.Error:
-                count += 1
-
+    if connection:
+        cursor = connection.cursor()
+        if key == 'debug':
+            rows = cursor.execute(sql)
+        else:
+            # while loop is needed because informix barfs from
+            # time to time. 10 is the current threshhold.
+            count = 0
+            while count < 10:
+                try:
+                    rows = cursor.execute(sql)
+                    break
+                except pyodbc.Error:
+                    count += 1
     return rows
