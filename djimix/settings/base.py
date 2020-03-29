@@ -12,6 +12,8 @@ LENEL_EARL = ''
 # informix connection string
 INFORMIX_ODBC = ''
 INFORMIX_ODBC_TRAIN = ''
+INFORMIX_ODBC_MACOS = ''
+INFORMIX_ODBC_MACOS_TRAIN = ''
 INFORMIX_ODBC_JXPROD = ''
 INFORMIX_ODBC_JXTEST = ''
 
@@ -121,7 +123,6 @@ TEMPLATES = [
         'OPTIONS': {
             'debug':DEBUG,
             'context_processors': [
-                'djtools.context_processors.sitevars',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
