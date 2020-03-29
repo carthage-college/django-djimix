@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os, sys
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'directory.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djimix.settings.shell')
 
 import django
 django.setup()
@@ -12,17 +12,10 @@ from django.core.cache import cache
 
 from directory.api.views import get_peeps
 
-# set up command-line options
-desc = """
-    clear the cache and repopulate it for API data
-"""
 
 
 def main():
-    '''
-    main function
-    '''
-
+    """Clear the cache and repopulate it for API data."""
     headers = {'Cache-Control': 'no-cache'}
     for key in ['student','facstaff']:
         cache.delete('provisioning_vw_{}_api'.format(key))
@@ -30,4 +23,3 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
-
