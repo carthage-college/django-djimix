@@ -1,4 +1,4 @@
-django==2.2.9
+django==2.2.11
 setuptools==40.7.1
 MySQL-python==1.2.5
 python-memcached==1.59
