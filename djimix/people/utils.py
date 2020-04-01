@@ -61,7 +61,7 @@ def get_peeps(who):
                 lastname, firstname
         """.format(where)
 
-        objects = xsql(sql)
+        objects = xsql(sql, key=settings.INFORMIX_DEBUG)
 
         if objects:
             peeps = []
