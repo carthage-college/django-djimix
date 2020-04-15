@@ -25,42 +25,71 @@ SELECT
     profile_rec.birth_date, profile_rec.sex, mobile_rec.phone as mobile,
     prog_enr_rec.cl,
     prog_enr_rec.adv_id, prog_enr_rec.subprog, prog_enr_rec.lv_date,
-        TRIM(
-            CASE
-                WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
-                THEN major1.txt
-                ELSE conc1.txt
-            END
-        ) AS major1,
-        TRIM(
-            CASE
-                WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
-                THEN major2.txt
-                ELSE conc2.txt
-            END
-        ) AS major2,
-        TRIM(
-            CASE
-                WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
-                THEN major3.txt
-                ELSE ""
-            END
-        ) AS major3,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN major1.txt
+            ELSE conc1.txt
+        END
+    ) AS major1,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN major2.txt
+            ELSE conc2.txt
+        END
+    ) AS major2,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN major3.txt
+            ELSE ""
+        END
+    ) AS major3,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN minor1.txt
+            ELSE conc1.txt
+        END
+    ) AS minor1,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN minor2.txt
+            ELSE conc2.txt
+        END
+    ) AS minor2,
+    TRIM(
+        CASE
+            WHEN TRIM(prog_enr_rec.deg) IN ("BA","BS")
+            THEN minor3.txt
+            ELSE ""
+        END
+    ) AS minor3,
     mobile_rec.phone as mobile
 FROM
     id_rec
 INNER JOIN
     prog_enr_rec ON  id_rec.id = prog_enr_rec.id
 LEFT JOIN
-    major_table major1  ON  prog_enr_rec.major1    = major1.major
+    major_table major1  ON  prog_enr_rec.major1 = major1.major
 LEFT JOIN
-    major_table major2  ON  prog_enr_rec.major2    = major2.major
+    major_table major2  ON  prog_enr_rec.major2 = major2.major
 LEFT JOIN
-    major_table major3  ON  prog_enr_rec.major3    = major3.major
+    major_table major3  ON  prog_enr_rec.major3 = major3.major
 LEFT JOIN
-    conc_table conc1    ON  prog_enr_rec.conc1     = conc1.conc
+    minor_table minor1  ON  prog_enr_rec.minor1 = minor1.minor
 LEFT JOIN
-    conc_table conc2    ON  prog_enr_rec.conc2     = conc2.conc
+    minor_table minor2  ON  prog_enr_rec.minor2 = minor2.minor
+LEFT JOIN
+    minor_table minor3  ON  prog_enr_rec.minor3 = minor3.minor
+LEFT JOIN
+    conc_table conc1    ON  prog_enr_rec.conc1  = conc1.conc
+LEFT JOIN
+    conc_table conc2    ON  prog_enr_rec.conc2  = conc2.conc
+LEFT JOIN
+    conc_table conc3    ON  prog_enr_rec.conc3  = conc3.conc
 LEFT JOIN
     adm_rec     ON  id_rec.id = adm_rec.id
 LEFT JOIN
