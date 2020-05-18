@@ -5,6 +5,7 @@
 from django.conf import settings
 
 import pyodbc
+import sys
 
 
 def get_connection(earl=None, encoding=True):
@@ -28,7 +29,7 @@ def get_connection(earl=None, encoding=True):
                 break
 
     if cnxn and encoding:
-        try:
+        if sys.version_info >= (3,):
             # Python 3.x
             cnxn.setencoding(encoding='utf-8')
             cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='cp1252')
@@ -38,7 +39,7 @@ def get_connection(earl=None, encoding=True):
                 encoding='utf-32le',
                 ctype=pyodbc.SQL_CHAR,
             )
-        except pyodbc.NotSupportedError:
+        else:
             # Python 2.7
             cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='cp1252')
             cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='cp1252')
