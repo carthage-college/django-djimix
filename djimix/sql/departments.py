@@ -20,8 +20,8 @@ AND
     hrdept_table.hrdiv != "EMER"
 AND
     hrdept_table.hrdept = pos_table.pcn_03
-AND
-    job_rec.beg_date < TODAY
+--AND
+--    job_rec.beg_date < TODAY
 AND
     (job_rec.end_date > TODAY or job_rec.end_date is null)
 ORDER BY
