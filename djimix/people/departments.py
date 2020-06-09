@@ -28,13 +28,13 @@ def departments_all_choices():
 
     if staff:
         for st in staff:
-            depts.append((st.hrdept, st.department))
+            depts.append((st.hrdept.strip(), st.department.strip()))
 
     depts.append(('', '---Faculty Deparments---'))
 
     if faculty:
         for fac in faculty:
-            depts.append((fac.pcn_03, fac.department))
+            depts.append((fac.pcn_03.strip(), fac.department.strip()))
 
     return depts
 
