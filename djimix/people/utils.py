@@ -31,7 +31,7 @@ def get_position(tpos):
         sql = POSITION(tpos=tpos)
         results = xsql(sql).fetchone()
         if not results:
-            results = settings.TPOS_DEFAULT[tpos]
+            results = settings.TPOS_DEFAULT.get(tpos)
         cache.set(key, results, None)
     return results
 
