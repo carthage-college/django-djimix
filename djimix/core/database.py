@@ -32,8 +32,12 @@ def get_connection(earl=None, encoding=True):
         if sys.version_info >= (3,):
             # Python 3.x
             cnxn.setencoding(encoding='utf-8')
-            cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
-            cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+            #cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+            #cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+            #cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='cp1252')
+            #cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='cp1252')
+            cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='ISO-8859-1')
+            cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='ISO-8859-1')
             cnxn.setdecoding(
                 pyodbc.SQL_WMETADATA,
                 encoding='utf-32le',
