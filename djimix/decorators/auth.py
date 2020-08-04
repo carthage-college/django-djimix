@@ -15,8 +15,8 @@ from djtools.fields import NOW
 
 from functools import wraps
 
-import logging
-logger = logging.getLogger('debug_logfile')
+#import logging
+#logger = logging.getLogger('debug_logfile')
 #logger.debug('here in neutral zone')
 
 
@@ -50,12 +50,12 @@ def portal_auth_required(session_var, group=None, redirect_url=None, encryption=
                     # UserID value from the portal
                     if request.GET.get('uid'):
                         guid = request.GET.get('uid')
-                        logger.debug(guid)
+                        #logger.debug(guid)
                         if encryption:
                             guid = decrypt(guid)
                         uid = get_userid(guid)
                         if uid:
-                            logger.debug(uid)
+                            #logger.debug(uid)
                             uid = int(uid)
                             try:
                                 user = User.objects.get(pk=uid)
