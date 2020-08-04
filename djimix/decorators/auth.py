@@ -8,6 +8,7 @@ from django.shortcuts import resolve_url
 from django.contrib.auth import login
 
 from djauth.LDAPManager import LDAPManager
+from djimix.core.encryption import decrypt
 from djimix.core.utils import get_userid
 from djtools.utils.users import in_group
 from djtools.fields import NOW
@@ -15,11 +16,11 @@ from djtools.fields import NOW
 from functools import wraps
 
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('debug_logfile')
 #logger.debug('here in neutral zone')
 
 
-def portal_auth_required(session_var, group=None, redirect_url=None):
+def portal_auth_required(session_var, group=None, redirect_url=None, encryption=False):
     """
     Accepts a @@UserID (FWK_User.ID) value via GET (uid) passed
     from jenzabar portal environment, or fall back to django auth
@@ -48,9 +49,13 @@ def portal_auth_required(session_var, group=None, redirect_url=None):
                     #logger.debug('uid = {}'.format(request.GET.get('uid')))
                     # UserID value from the portal
                     if request.GET.get('uid'):
-                        #logger.debug('if 3')
-                        uid = get_userid(request.GET.get('uid'))
+                        guid = request.GET.get('uid')
+                        logger.debug(guid)
+                        if encryption:
+                            guid = decrypt(guid)
+                        uid = get_userid(guid)
                         if uid:
+                            logger.debug(uid)
                             uid = int(uid)
                             try:
                                 user = User.objects.get(pk=uid)
