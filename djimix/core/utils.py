@@ -20,11 +20,9 @@ def get_userid(jenzabarUserID):
     if not pattern.match(jenzabarUserID):
         return None
     try:
-        #userID = jenzabarUserID.encode("utf-8")
-        userID = jenzabarUserID
         # for SQLServer, you must use single quotes in the SQL incantation,
         # otherwise it barfs for some reason
-        sql = "SELECT * FROM fwk_user WHERE id='{}'".format(userID)
+        sql = "SELECT * FROM fwk_user WHERE id='{}'".format(jenzabarUserID)
         connection = get_connection(settings.MSSQL_EARL, encoding=False)
         # automatically closes the connection after leaving 'with' block
         with connection:
