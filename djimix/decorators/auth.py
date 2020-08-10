@@ -15,8 +15,8 @@ from djtools.fields import NOW
 
 from functools import wraps
 
-import logging
-logger = logging.getLogger('debug_logfile')
+#import logging
+#logger = logging.getLogger('debug_logfile')
 #logger.debug('here in neutral zone')
 
 
