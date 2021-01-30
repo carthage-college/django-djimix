@@ -52,10 +52,10 @@ def academic_department(did):
 def person_departments(cid):
     """Returns all departments to which a person belongs."""
     rows = xsql(PERSON_DEPARTMENTS(college_id=cid))
-    try:
-        return rows.fetchall()
-    except AttributeError:
-        return None
+    depts = []
+    for row in rows.fetchall():
+        depts.append((row.code.strip(), row.department.strip()))
+    return depts
 
 
 def chair_departments(cid):
