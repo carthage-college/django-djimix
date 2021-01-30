@@ -1,6 +1,6 @@
 django==2.2.13
 setuptools==40.7.1
-MySQL-python==1.2.5
+mysqlclient==2.0.1
 python-memcached==1.59
 python-ldap==3.1.0
 pyodbc==4.0.28
