@@ -17,8 +17,9 @@ def get_uuid(email):
     return row
 
 
-def get_userid(jenzabarUserID):
+def get_userid(jenzabarUserID, username=False):
     """Obtains the user ID based on the UUID provided."""
+    ret = None
     # prevent folks from submitting anything but the fwk_user id
     #reggie="([\w\-\.]+[\-\.][\w\-\.]+)(\d+)\-(\w+)"
     #reggie="(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})"
@@ -33,15 +34,16 @@ def get_userid(jenzabarUserID):
     pattern = re.compile(reggie)
     if not pattern.match(jenzabarUserID):
         return None
-    try:
-        # for SQLServer, you must use single quotes in the SQL incantation,
-        # otherwise it barfs for some reason
-        sql = "SELECT * FROM fwk_user WHERE id='{}'".format(jenzabarUserID)
-        connection = get_connection(settings.MSSQL_EARL, encoding=False)
-        # automatically closes the connection after leaving 'with' block
-        with connection:
-            results = xsql(sql, connection, key='debug')
-            row = results.fetchone()
-        return row[5]
-    except:
-        return None
+    sql = "SELECT * FROM fwk_user WHERE id='{}'".format(jenzabarUserID)
+    # for SQLServer, you must use single quotes in the SQL incantation,
+    # otherwise it barfs for some reason
+    connection = get_connection(settings.MSSQL_EARL, encoding=False)
+    # automatically closes the connection after leaving 'with' block
+    with connection:
+        results = xsql(sql, connection, key='debug')
+        row = results.fetchone()
+        if username:
+            ret = row
+        else:
+            ret = row[5]
+    return ret
