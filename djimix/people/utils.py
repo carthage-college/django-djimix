@@ -68,8 +68,10 @@ def get_peeps(who):
             for obj in objects:
                 row = {
                     'cid': obj[0],
-                    'lastname': obj[1], 'firstname': obj[2],
-                    'email': '{}@carthage.edu'.format(obj[3])
+                    'lastname': obj[1],
+                    'firstname': obj[2],
+                    'email': '{}@carthage.edu'.format(obj[3]),
+                    'username': obj[3],
                 }
                 peeps.append(row)
             cache.set(key, peeps, timeout=86400)
