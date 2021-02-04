@@ -1,14 +1,13 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.core.cache import cache
-
 from djimix.core.database import xsql
 from djimix.sql.hr import CID_FROM_EMAIL, POSITION
 
 
 def get_cid(email):
-    """
-    obtain a college ID from an email address
-    """
+    """Obtain a college ID from an email address."""
     cid = None
     obj = xsql(CID_FROM_EMAIL(email=email)).fetchone()
     if obj:
@@ -18,14 +17,13 @@ def get_cid(email):
 
 def get_position(tpos):
     """
-    obtains some user information based on job title position number and
-    caches the results
+    Obtains some user information based on job title position number.
 
     NOTE: this is not very reliable when the position is vacant and/or
-    there is an interim appointment
+    there is an interim appointment.
     """
 
-    key = 'TPOS_{}'.format(tpos)
+    key = 'TPOS_{0}'.format(tpos)
     results = cache.get(key)
     if not results:
         sql = POSITION(tpos=tpos)
@@ -37,7 +35,8 @@ def get_position(tpos):
 
 
 def get_peeps(who):
-    key = 'provisioning_vw_{}_api'.format(who)
+    """Obtain the folks based on who parameter."""
+    key = 'provisioning_vw_{0}_api'.format(who)
     peeps = cache.get(key)
 
     if peeps is None:
@@ -45,7 +44,7 @@ def get_peeps(who):
         if who == 'facstaff':
             where = 'faculty IS NOT NULL OR staff IS NOT NULL'
         elif who in ['faculty','staff','student']:
-            where = '{} IS NOT NULL'.format(who)
+            where = '{0} IS NOT NULL'.format(who)
         else:
             where = None
 
@@ -56,7 +55,7 @@ def get_peeps(who):
             FROM
                 provisioning_vw
             WHERE
-                {}
+                {0}
             ORDER BY
                 lastname, firstname
         """.format(where)
@@ -70,7 +69,7 @@ def get_peeps(who):
                     'cid': obj[0],
                     'lastname': obj[1],
                     'firstname': obj[2],
-                    'email': '{}@carthage.edu'.format(obj[3]),
+                    'email': '{0}@carthage.edu'.format(obj[3]),
                     'username': obj[3],
                 }
                 peeps.append(row)
