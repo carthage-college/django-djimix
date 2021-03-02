@@ -18,7 +18,7 @@ LEFT JOIN aa_rec as email_rec on
 LEFT JOIN
     job_rec on id_rec.id = job_rec.id
 WHERE
-    id_rec.id =666
+    id_rec.id = {CID}
 /*
 AND
     id_rec.firstname = ''
