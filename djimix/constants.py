@@ -4,7 +4,7 @@
 
 TERM_LIST = {
     'RA': 'Fall',
-    'RB': 'J-Term',
+    'RB': 'May Term',
     'RC': 'Spring',
     'RD': 'Summer Pre-Session',
     'RE': 'Summer',
@@ -17,7 +17,7 @@ TERM_LIST = {
     'AT': 'Summer II',
     'GE': 'Summer',
     'GA': 'Fall',
-    'GB': 'J-Term',
+    'GB': 'May Term',
     'TA': 'Fall',
     'PA': 'Fall',
     'YA': 'Fall',
