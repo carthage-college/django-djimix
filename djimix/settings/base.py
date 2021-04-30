@@ -24,8 +24,8 @@ INFORMIXDIR = '/opt/ibm/informix'
 ODBCINI = '/etc/odbc.ini'
 ONCONFIG = 'onconf.cars'
 INFORMIXSQLHOSTS = '/opt/ibm/informix/etc/sqlhosts'
-LD_LIBRARY_PATH = '{}/lib:{}/lib/esql:{}/lib/tools:/usr/lib/apache2/modules:{}/lib/cli'.format(
-    INFORMIXDIR,INFORMIXDIR,INFORMIXDIR,INFORMIXDIR
+LD_LIBRARY_PATH = '{0}/lib:{1}/lib/esql:{2}/lib/tools:/usr/lib/apache2/modules:{3}/lib/cli'.format(
+    INFORMIXDIR,INFORMIXDIR,INFORMIXDIR,INFORMIXDIR,
 )
 LD_RUN_PATH = '/opt/ibm/informix/lib:/opt/ibm/informix/lib/esql:/opt/ibm/informix/lib/tools:/usr/lib/apache2/modules'
 
