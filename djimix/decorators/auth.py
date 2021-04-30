@@ -15,10 +15,6 @@ from djtools.fields import NOW
 
 from functools import wraps
 
-#import logging
-#logger = logging.getLogger('debug_logfile')
-#logger.debug('here in neutral zone')
-
 
 def portal_auth_required(session_var, group=None, redirect_url=None, encryption=False):
     """
@@ -31,31 +27,24 @@ def portal_auth_required(session_var, group=None, redirect_url=None, encryption=
     def _portal_auth_required(view_func):
         @wraps(view_func, assigned=available_attrs(view_func))
         def wrapper(request, *args, **kwargs):
-            #logger.debug('here in the rappa')
             resolved_redirect_url = force_str(
                 resolve_url(redirect_url or reverse_lazy("auth_login"))
             )
             if not request.session.get(session_var):
-                #logger.debug('if 1')
                 if not request.user.is_authenticated:
-                    #logger.debug('if 2')
                     # we want to redirect back to current view URL
                     refer = request.get_full_path()
-                    #logger.debug('refer = {}'.format(refer))
                     redirect = '{}?next={}'.format(
                         reverse_lazy("auth_login"), refer
                     )
-                    #logger.debug('redirect = {}'.format(redirect))
-                    #logger.debug('uid = {}'.format(request.GET.get('uid')))
                     # UserID value from the portal
-                    if request.GET.get('uid'):
-                        guid = request.GET.get('uid')
-                        #logger.debug(guid)
+                    guid = request.GET.get('uid')
+                    if guid:
                         if encryption:
+                            test = 1
                             guid = decrypt(guid)
                         uid = get_userid(guid)
                         if uid:
-                            #logger.debug(uid)
                             uid = int(uid)
                             try:
                                 user = User.objects.get(pk=uid)
@@ -65,8 +54,6 @@ def portal_auth_required(session_var, group=None, redirect_url=None, encryption=
                                     l = LDAPManager()
                                     luser = l.search(uid)
                                     data = luser[0][1]
-                                    #logger.debug('data\n')
-                                    #logger.debug(data)
                                     password = User.objects.make_random_password(
                                         length=32
                                     )

@@ -24,17 +24,20 @@ def departments_all_choices():
     """Returns department tuples for choices parameter in models and forms."""
     faculty = xsql(FACULTY_DEPTS)
     staff = xsql(STAFF_DEPTS)
-    depts = [('', '---Staff Departments---')]
-
-    if staff:
-        for st in staff:
-            depts.append((st.hrdept.strip(), st.department.strip()))
-
-    depts.append(('', '---Faculty Deparments---'))
+    depts = [
+        ('', '---Choose Your Department---'),
+        ('', '---Faculty Departments---'),
+    ]
 
     if faculty:
         for fac in faculty:
             depts.append((fac.pcn_03.strip(), fac.department.strip()))
+
+    depts.append(('', '---Staff Deparments---'))
+
+    if staff:
+        for st in staff:
+            depts.append((st.hrdept.strip(), st.department.strip()))
 
     return depts
 
@@ -52,10 +55,10 @@ def academic_department(did):
 def person_departments(cid):
     """Returns all departments to which a person belongs."""
     rows = xsql(PERSON_DEPARTMENTS(college_id=cid))
-    try:
-        return rows.fetchall()
-    except AttributeError:
-        return None
+    depts = []
+    for row in rows.fetchall():
+        depts.append((row.code.strip(), row.department.strip()))
+    return depts
 
 
 def chair_departments(cid):
