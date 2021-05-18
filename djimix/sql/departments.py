@@ -88,7 +88,8 @@ AND
         "ACPR","ADMS","ADUL","ADVS","ARHU","ATH","BOOK","BSOF","CARE",
         "CHAP","COMM","CONF","DOS","EDU","EVS","FINA","FOOD","HCC","HUMR",
         "IA","INEF","INRS","LIS","MAIL","MAIN","NURS","NSSS","PRES","PROV",
-        "PRFS","PRST","REGI","RESL","SECU","STIV","WRC","WSGC"
+        "PRFS","PRST","REGI","RESL","SECU","STAC","STIV","TSI","WRC","WSGC"
+
     )
 AND
     hrdept_table.hrdiv not in ("EMER")
