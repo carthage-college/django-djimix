@@ -1,5 +1,5 @@
 cryptography==3.4.7
-django==2.2.20
+django==2.2.21
 mysqlclient==2.0.1
 pyodbc==4.0.30
 python-memcached==1.59
