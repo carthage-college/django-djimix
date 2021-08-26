@@ -1,4 +1,4 @@
-cryptography==3.4.7
+cryptography==3.4.8
 django==2.2.24
 mysqlclient==2.0.1
 pyodbc==4.0.30
