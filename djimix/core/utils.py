@@ -36,10 +36,8 @@ def get_userid(jenzabarUserID, username=False):
         return None
     sql = "SELECT * FROM fwk_user WHERE id='{}'".format(jenzabarUserID)
     # for SQLServer, you must use single quotes in the SQL incantation,
-    # otherwise it barfs for some reason
-    connection = get_connection(settings.MSSQL_EARL, encoding=False)
-    # automatically closes the connection after leaving 'with' block
-    with connection:
+    # otherwise it barfs for some reason.
+    with get_connection(settings.MSSQL_EARL, encoding=False) as connection:
         results = xsql(sql, connection, key='debug')
         row = results.fetchone()
         if username:
