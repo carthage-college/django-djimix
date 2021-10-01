@@ -135,3 +135,18 @@ INNER JOIN
 WHERE
     adm_rec.primary_app = 'Y' AND adm_rec.id = {cid}
 '''.format
+COMMUTERS = '''
+SELECT
+    TRIM(trim(aa_rec.line1) || trim(aa_rec.line2) || trim(aa_rec.line3)) AS email
+    from aa_rec, stu_serv_rec
+WHERE
+    aa_rec.id = stu_serv_rec.id
+    and aa_rec.aa = "EML1"
+    and stu_serv_rec.yr = year(CURRENT)
+    and stu_serv_rec.sess =
+    CASE
+    WHEN month(CURRENT) > 7 THEN "RA"
+    ELSE "RC"
+    END
+    and stu_serv_rec.bldg in ("CMTR","OFF","cmtr")
+'''
