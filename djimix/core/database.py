@@ -2,10 +2,10 @@
 
 """Database utilities for pyodbc."""
 
-from django.conf import settings
-
 import pyodbc
 import sys
+
+from django.conf import settings
 
 
 def get_connection(earl=None, encoding=True):
