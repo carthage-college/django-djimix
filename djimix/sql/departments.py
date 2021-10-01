@@ -9,19 +9,15 @@ FROM
     id_rec
 LEFT JOIN
     job_rec on (id_rec.id = job_rec.id),
-    hrdept_table, pos_table
+    hrdept_table
 WHERE
     id_rec.id = {college_id}
 AND
     hrdept_table.end_date is null
 AND
-    pos_table.tpos_no = job_rec.tpos_no
-AND
     hrdept_table.hrdiv != "EMER"
 AND
-    hrdept_table.hrdept = pos_table.pcn_03
---AND
---    job_rec.beg_date < TODAY
+    hrdept_table.hrdept = job_rec.hrdept
 AND
     (job_rec.end_date > TODAY or job_rec.end_date is null)
 ORDER BY
@@ -130,40 +126,50 @@ AND
 """
 DEPARTMENT_DIVISION_CHAIRS = """
 SELECT
-    TRIM(DT.txt) AS department_name,
-    TRIM(DTID.firstname) AS dept_firstname,
-    TRIM(DTID.lastname) AS dept_lastname,
-    DTID.id AS dept_id,
+    dept_table.dept, dept_table.txt as department_name,
+    dept_id.firstname, dept_id.lastname, dept_id.id as deptid,
     dept_email_rec.line1 as dept_email,
-    TRIM(DVID.firstname) AS div_firstname,
-    TRIM(DVID.lastname) AS div_lastname,
-    DVID.id AS div_id,
+    div_table.txt as division_name, div_id.firstname as div_first,
+    div_id.lastname as div_last, div_id.id as divid,
     div_email_rec.line1 as div_email
 FROM
-    pos_table as PT
+    dept_table
+JOIN
+    id_rec
+AS
+    dept_id
+ON
+    dept_table.head_id = dept_id.id
+JOIN
+    div_table
+ON
+    div_table.div = dept_table.div
+JOIN
+    id_rec
+AS
+    div_id
+ON
+    div_table.head_id = div_id.id
 INNER JOIN
-    dept_table as DT ON PT.pcn_03 = DT.dept
+    aa_rec
+AS
+    div_email_rec
+ON
+    (div_table.head_id = div_email_rec.id AND div_email_rec.aa = "EML1")
 INNER JOIN
-    div_table as DVT ON DT.div = DVT.div
-INNER JOIN
-    id_rec as DTID ON DT.head_id = DTID.id
-INNER JOIN
-    id_rec as DVID ON DVT.head_id = DVID.id
-INNER JOIN
-    aa_rec as div_email_rec on
-    (DVT.head_id = div_email_rec.id AND div_email_rec.aa = "EML1")
-INNER JOIN
-    aa_rec as dept_email_rec on
-    (DT.head_id = dept_email_rec.id AND dept_email_rec.aa = "EML1")
+    aa_rec
+AS
+    dept_email_rec
+ON
+    (dept_table.head_id = dept_email_rec.id AND dept_email_rec.aa = "EML1")
 WHERE
-    TODAY BETWEEN DT.active_date AND NVL(DT.inactive_date, TODAY)
+    NVL(dept_table.inactive_date,today) >= TODAY
 AND
     {where}
-GROUP BY
-    department_name, dept_firstname, dept_lastname, dept_id, dept_email,
-    div_firstname, div_lastname, div_id, div_email
 ORDER BY
-    department_name
+    div_table.txt, dept_table.txt
+
+
 """.format
 DEPARTMENT_FACULTY = """
 SELECT
