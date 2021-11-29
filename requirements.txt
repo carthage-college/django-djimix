@@ -3,4 +3,4 @@ django==2.2.24
 mysqlclient==2.0.1
 pyodbc==4.0.30
 python-memcached==1.59
-python-ldap==3.3.1
+python-ldap==3.4.0
