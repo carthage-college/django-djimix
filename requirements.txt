@@ -1,6 +1,6 @@
-cryptography==3.4.8
+cryptography>=36.0
 django==2.2.24
-mysqlclient==2.0.1
-pyodbc==4.0.30
+mysqlclient==2.1.0
+pyodbc==4.0.32
 python-memcached==1.59
-python-ldap==3.3.1
+python-ldap==3.4.0
