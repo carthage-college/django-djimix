@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Group, User
@@ -11,7 +13,6 @@ from djauth.LDAPManager import LDAPManager
 from djimix.core.encryption import decrypt
 from djimix.core.utils import get_userid
 from djtools.utils.users import in_group
-from djtools.fields import NOW
 
 from functools import wraps
 
@@ -58,8 +59,10 @@ def portal_auth_required(session_var, group=None, redirect_url=None, encryption=
                                         length=32
                                     )
                                     user = User.objects.create(
-                                        pk=uid, username=data['cn'][0],
-                                        email=data['mail'][0], last_login=NOW
+                                        pk=uid,
+                                        username=data['cn'][0],
+                                        email=data['mail'][0],
+                                        last_login=datetime.datetime.now,
                                     )
                                     user.set_password(password)
                                     user.first_name = data['givenName'][0]
