@@ -38,7 +38,7 @@ def departments_all_choices():
     if staff:
         for st in staff:
             depts.append((st.hrdept.strip(), st.department.strip()))
-    depts.append(('CCI', 'College Culture for Inclusion'))
+    depts.append(('CCFI', 'College Culture for Incl'))
 
     return depts
 
