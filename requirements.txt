@@ -1,6 +1,7 @@
-django==3.2.18
-cryptography>=36.0
-mysqlclient==2.1.0
-pyodbc==4.0.32
-python-memcached==1.59
-python-ldap==3.4.0
+django==4.2.5
+cryptography
+mysqlclient
+pymemcache
+pyodbc
+python-ldap
+python-memcached
