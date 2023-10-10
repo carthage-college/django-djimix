@@ -2,6 +2,7 @@
 
 """Various constants used throughout the app."""
 
+
 TERM_LIST = {
     'RA': 'Fall',
     'RB': 'J-Term',
@@ -11,8 +12,8 @@ TERM_LIST = {
     'AA': 'Fall I',
     'AB': 'Fall II ',
     'AG': 'Winter',
-    'AK': 'Spring I',
-    'AM': 'Spring II',
+    'AK': 'Spring 1st 7 weeks',
+    'AM': 'Spring 2nd 7 weeks',
     'AS': 'Summer I',
     'AT': 'Summer II',
     'GE': 'Summer',
